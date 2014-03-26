@@ -1,0 +1,13 @@
+//
+//  AppearanceHandler.m
+//  JudgeApp
+//
+//  Created by Andreas Keller on 2014-03-26.
+//  Copyright (c) 2014 Andreas Keller. All rights reserved.
+//
+
+#import "AppearanceHandler.h"
+
+@implementation AppearanceHandler
+
+@end

@@ -18,6 +18,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    CALayer *btnLayer = [_SaveButton layer];
+    [btnLayer setMasksToBounds:YES];
+    [btnLayer setCornerRadius:5.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -26,4 +29,6 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)OnSave:(id)sender {
+}
 @end
