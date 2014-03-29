@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Appearance.h"
 
 @interface AppearanceHandler : NSObject
+@property (nonatomic, strong) NSMutableArray * appearanceArray;
+@property (nonatomic, strong) NSMutableArray * jsonArray;
+@property (nonatomic, strong) NSString* appearanceUrl;
 
+#pragma mark -
+#pragma mark mark Class Methods
+
+- (void) setUrl: (NSString *) url;
+- (void) retreiveData;
+- (NSInteger) getNbrOfAppearances;
+- (NSMutableArray*) getAppearanceList;
 @end

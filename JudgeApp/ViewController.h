@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppearanceHandler.h"
+#import "FishHandler.h"
+#import "ImageCache.h"
 
 @interface ViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *SelectedSpices;
@@ -41,6 +44,32 @@
 @property (weak, nonatomic) IBOutlet UILabel *LblDisplaySelectedCategory;
 @property (weak, nonatomic) IBOutlet UIButton *SaveButton;
 - (IBAction)OnSave:(id)sender;
+- (IBAction)SaveSettings:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *serverIP;
+@property (weak, nonatomic) IBOutlet UITextField *databaseName;
+@property (weak, nonatomic) IBOutlet UITextField *judgeID;
+@property (weak, nonatomic) IBOutlet UIButton *saveSettings;
+- (IBAction)serverIPChanged:(id)sender;
+
+@property (strong, nonatomic) AppearanceHandler * appHandler;
+@property (strong, nonatomic) FishHandler * fishHandler;
+@property (strong, nonatomic) ImageHandler * imageHandler;
+@property (weak, nonatomic) IBOutlet UILabel *PicPath;
+
+
+- (IBAction)slider1Updated:(id)sender;
+- (IBAction)Slider2Updated:(id)sender;
+- (IBAction)Slider3Updated:(id)sender;
+- (IBAction)Slider4Updated:(id)sender;
+- (IBAction)Slider5Updated:(id)sender;
+- (IBAction)Slider6Updated:(id)sender;
+- (IBAction)Slider7Updated:(id)sender;
+- (IBAction)Slider8Updated:(id)sender;
+- (IBAction)Slider9Updated:(id)sender;
+- (IBAction)SelectedFishChanged:(id)sender;
+@property (weak, nonatomic) IBOutlet UISlider *SelectedFishSlider;
+@property (weak, nonatomic) IBOutlet UIImageView *fishImage;
+
 
 
 @end
