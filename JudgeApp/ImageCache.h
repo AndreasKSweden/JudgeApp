@@ -16,8 +16,8 @@
 #pragma mark - Methods
 
 + (ImageCache*)sharedImageCache;
-- (void) AddImage:(NSString *)imageURL: (UIImage *)image;
-- (UIImage*) GetImage:(NSString *)imageURL;
-- (BOOL) DoesExist:(NSString *)imageURL;
+- (void) AddImage:(NSString *)imageURL withImage: (UIImage *)image;
+- (UIImage*) GetImage: (NSString *) imageURL;
+- (BOOL) DoesExist: (NSString *) imageURL;
 
 @end

@@ -20,4 +20,6 @@
 #pragma mark -
 
 - (id) initWithIndex: (NSInteger) index andFishPicPath: (NSString *) picPath andFishClass: (NSString *) class andFishTank: (NSInteger) tank andscoreArray: (NSArray *) scores;
+
+
 @end

@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSMutableArray * jsonArray;
 @property (nonatomic, strong) NSString* fishUrl;
 @property (nonatomic, strong) ImageHandler * imageHandler;
+@property NSInteger leftTojudge;
 
 #pragma mark -
 #pragma mark mark Class Methods
@@ -23,5 +24,9 @@
 - (NSInteger) getNbrOfFishes;
 - (NSMutableArray*) getFishList;
 - (NSString *) getPath: (NSInteger) index;
+- (NSString *) getClass: (NSInteger) index;
+
+- (NSInteger) getTank: (NSInteger) index;
+- (NSInteger) getFishIndex: (NSInteger) index;
 
 @end

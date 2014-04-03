@@ -11,16 +11,19 @@
 #import "FishHandler.h"
 #import "ImageHandler.h"
 #import "ImageCache.h"
+#import "ScoreHandler.h"
 
 @interface ViewController ()
 - (void) initFishList;
 - (void) initAppearanceList;
+-(Boolean) VerifyJudgeId:(int)Id;
+-(NSInteger) getAppScore:(NSInteger)Tank;
 
 @end
 
 
 @implementation ViewController
-@synthesize PicPath;
+@synthesize PicPath, scoreHandler;
 
 - (void)viewDidLoad
 {
@@ -31,9 +34,35 @@
     [btnLayer setCornerRadius:5.0f];
     _appHandler = [[AppearanceHandler alloc] init];
     _fishHandler = [[FishHandler alloc] init];
+    scoreHandler = [[ScoreHandler alloc] init];
     _saveSettings.enabled = YES;
     _serverIP.text = @"109.201.140.85";
+    _judgeIndex = 0;
     _databaseName.text = @"Championship 2014";
+    _SelectedSpices.text = @"Select Discus";
+    _oldTankIndex = 1;
+    _oldSlider1Value=1;
+    _oldSlider2Value=1;
+    _oldSlider3Value=1;
+    _oldSlider4Value=1;
+    _oldSlider5Value=1;
+    _oldSlider6Value=1;
+    _oldSlider7Value=1;
+    _oldSlider8Value=1;
+    _oldSlider9Value=1;
+ /*
+    //Debug
+    _serverIP.hidden = YES;
+    _databaseName.hidden = YES;
+    _judgeID.enabled = NO;
+    _LblServerIP.hidden = YES;
+    _LblDatase.hidden = YES;
+    _LblJudgeId.text = @"Welcome:";
+    _saveSettings.hidden = YES;
+    [self initFishList];
+    [self initAppearanceList];
+    [self initScoreList];
+*/
     
 }
 
@@ -45,44 +74,81 @@
 
 - (IBAction)OnSave:(id)sender {
     NSLog(@"Saving");
-    
+    NSArray * appArray;
+    NSInteger score;
     NSString * sendUrl = @"http://";
+    NSInteger appearanceIndex = 0;
+    sendUrl = [sendUrl stringByAppendingString:_serverIP.text];
+    NSString * strURL;
     
-    sendUrl = [sendUrl stringByAppendingString:_serverIP.text];/*
-    sendUrl = [sendUrl stringByAppendingString:@"/championship/insert_score.php?Fish=2&Judge=1&Appearance=6&Score=4&pass=diskus2014"];
-   // sendUrl = [sendUrl stringByAppendingString:];
-    
-    NSURL *url = [NSURL URLWithString:sendUrl];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSError *error;
-    NSURLResponse *response;
-    NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    if (error)
+    appArray = [_appHandler getAppearanceList];
+    for (int i = 0; i < appArray.count; i++)
     {
-            NSLog(@"Error code %d", error.code);
+        appearanceIndex = [[[appArray objectAtIndex:i] valueForKey:@"index"] integerValue];
+
+        switch (i) {
+            case 0:
+                score = [_LblResult1.text  integerValue];
+            break;
+            case 1:
+                score = [_LblResult2.text  integerValue];
+                break;
+            case 2:
+                score = [_LblResult3.text  integerValue];
+                break;
+            case 3:
+                score = [_LblResult4.text  integerValue];
+                break;
+            case 4:
+                score = [_LblResult5.text  integerValue];
+                break;
+            case 5:
+                score = [_LblResult6.text  integerValue];
+                break;
+            case 6:
+                score = [_LblResult7.text  integerValue];
+                break;
+            case 7:
+                score = [_LblResult8.text  integerValue];
+                break;
+            case 8:
+                score = [_LblResult9.text  integerValue];
+                break;
+            default:
+                score = 0;
+                break;
+        }
+        NSInteger present = [scoreHandler scorePresent: _m_fishIndex withApp:appearanceIndex];
+        if ( present != 1)
+        {
+            strURL = [NSString stringWithFormat:@"http://109.201.140.85/championship/insert_get_score.php?Fish="];
+
+            
+        }
+        else
+        {
+            strURL = [NSString stringWithFormat:@"http://109.201.140.85/championship/update_get_score.php?Fish="];
+
+        }
+            strURL = [strURL stringByAppendingString:[NSString stringWithFormat:@"%d",(int) _m_fishIndex]];
+            strURL = [strURL stringByAppendingString:@"&Judge="];
+            strURL = [strURL stringByAppendingString:[NSString stringWithFormat:@"%d",(int)_judgeIndex]];
+            strURL = [strURL stringByAppendingString:@"&Appearance="];
+            strURL = [strURL stringByAppendingString:[NSString stringWithFormat:@"%d",(int)appearanceIndex]];
+            strURL = [strURL stringByAppendingString:@"&Score="];
+            strURL = [strURL stringByAppendingString:[NSString stringWithFormat:@"%d",(int) score]];
+            strURL = [strURL stringByAppendingString:@"&&pass=diskus2014"];
+        
+
+            NSData *dataURL= [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
+    
+            NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
+    
+            NSLog(@"%@", strResult);
+            [scoreHandler retreiveData];
+//             _LblLeftToJudge.Text = [NSString stringWithFormat:@"%d",[_fishHandler getLeftTojudge]];
+        
     }
-     */
-    /*
-    NSString * post = [[NSString alloc] initWithFormat:@"&myvariable=%@", @"Fish=2&Judge=1&Appearance=6&Score=4&pass=diskus2014"];
-    NSData * postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:NO];
-    NSString * postLength = [NSString stringWithFormat:@"%d",[postData length]];
-    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:sendUrl]]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
-    NSURLConnection * conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    
-    if (conn) NSLog(@"Connection Successful");*/
-    
-    NSString * strURL = [NSString stringWithFormat:@"http://109.201.140.85/championship/add_score.php?Fish=2&Judge=1&Appearance=6&Score=4&pass=diskus2014"];
-    NSData *dataURL= [NSData dataWithContentsOfURL:[NSURL URLWithString:strURL]];
-    
-    NSString *strResult = [[NSString alloc] initWithData:dataURL encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", strResult);
-    
 }
 
 - (void) initFishList
@@ -121,7 +187,7 @@
             
                 // Add the image to the cache
                 if (image != nil)
-                    [[ImageCache sharedImageCache] AddImage:imgUrl :image];
+                    [[ImageCache sharedImageCache] AddImage:imgUrl withImage:image];
                 else
                     NSLog(@"failed %@", imgUrl);
             }
@@ -143,9 +209,36 @@
     _SelectedFishSlider.continuous = YES;
     _LblDisplaySelectedFish.text = [NSString stringWithFormat:@"%d",(int)_SelectedFishSlider.value];
     
+    _LblDisplaySelectedCategory.text = [_fishHandler getClass: (int)_SelectedFishSlider.value - 1];         
     
+    
+//    _LblLeftToJudge.Text = [NSString stringWithFormat:@"%d",[_fishHandler getLeftTojudge]];
+
+}
+
+
+- (void) initScoreList
+{
+    NSString * scoreUrl = @"http://";
+    
+    scoreUrl = [scoreUrl stringByAppendingString:_serverIP.text];
+    scoreUrl = [scoreUrl stringByAppendingString:@"/championship/get_json_score_for_judge.php?Judge="];
+    scoreUrl = [scoreUrl stringByAppendingString:[NSString stringWithFormat:@"%d",(int)_judgeIndex]];
+    
+    [scoreHandler setUrl:scoreUrl];
+    
+    NSString * addScoreUrl = @"http://";
+    
+    addScoreUrl = [addScoreUrl stringByAppendingString:_serverIP.text];
+    addScoreUrl = [addScoreUrl stringByAppendingString:@"/championship/insert_get_score.php?"];
+    
+    [scoreHandler setAddScoreUrl:addScoreUrl];
+
+    
+    [scoreHandler retreiveData];
     
 }
+
 
 - (void) initAppearanceList
 {
@@ -300,17 +393,63 @@
             default:
                 break;
         }
-        
     }
+}
+
+-(Boolean)VerifyJudgeId:(int)Id
+{
+    NSString * judgesUrl = @"http://";
+    NSMutableArray * jsonArray;
 
     
+    judgesUrl = [judgesUrl stringByAppendingString:_serverIP.text];
+    judgesUrl = [judgesUrl stringByAppendingString:@"/championship/verify_judges.php"];
+    judgesUrl = [judgesUrl stringByAppendingString:@"?passwd="];
+    judgesUrl = [judgesUrl stringByAppendingString:_judgeID.text];
+    NSURL * url = [NSURL URLWithString: judgesUrl];
+    NSData * data = [NSData dataWithContentsOfURL:url];
+    //Definitions
+    
+    if (data == nil)
+        return FALSE;
+    jsonArray = [NSJSONSerialization JSONObjectWithData:data options: kNilOptions error:nil];
+    
+    if (jsonArray.count == 0)
+        return FALSE;
+    
+    if (jsonArray.count > 1)
+    {
+        NSLog(@"Ops!! to many judges received. Same password on several judges not acceptable");
+        _judgeID.text = @"Not uniqe password.";
+        return false;
+    }
+        NSString * name = [[jsonArray objectAtIndex:0] objectForKey:@"Name"];
+        NSInteger index = [[[jsonArray objectAtIndex:0] objectForKey:@"counter"] integerValue];
+        
+
+    _judgeID.text = name;
+    _judgeIndex = index;
+    
+    return TRUE;
 }
+
 - (IBAction)SaveSettings:(id)sender
 {
-    
-    [self initFishList];
-    [self initAppearanceList];
-    
+    int judgeID = [_judgeID.text integerValue];
+    if ([self VerifyJudgeId: judgeID]== TRUE)
+    {
+        _serverIP.hidden = YES;
+        _databaseName.hidden = YES;
+        _judgeID.enabled = NO;
+        _LblServerIP.hidden = YES;
+        _LblDatase.hidden = YES;
+        _LblJudgeId.text = @"Welcome:";
+        _saveSettings.hidden = YES;
+        
+        [self initScoreList];
+        [self initFishList];
+        [self initAppearanceList];
+    }
 }
 
 - (IBAction)serverIPChanged:(id)sender {
@@ -319,46 +458,110 @@
 
 
 - (IBAction)slider1Updated:(id)sender {
-    _LblResult1.text = [NSString stringWithFormat:@"%d",(int)_Slider1.value];
+    if (_oldSlider1Value != (int)_Slider1.value)
+    {
+        _LblResult1.text = [NSString stringWithFormat:@"%d",(int)_Slider1.value];
+        NSArray * appArray;
+        appArray = [_appHandler getAppearanceList];
+        NSInteger appIndex = [[[appArray objectAtIndex:0] valueForKey:@"index"] integerValue];
 
+    }
 }
 
 - (IBAction)Slider2Updated:(id)sender {
-    _LblResult2.text = [NSString stringWithFormat:@"%d",(int)_Slider2.value];
+    if (_oldSlider2Value != (int)_Slider2.value)
+    {
+        _LblResult2.text = [NSString stringWithFormat:@"%d",(int)_Slider2.value];
+    NSArray * appArray;
+    appArray = [_appHandler getAppearanceList];
+    NSInteger appIndex = [[[appArray objectAtIndex:1] valueForKey:@"index"] integerValue];
+
+    }
 }
 
 - (IBAction)Slider3Updated:(id)sender {
-    _LblResult3.text = [NSString stringWithFormat:@"%d",(int)_Slider3.value];
+    if (_oldSlider3Value != (int)_Slider3.value)
+    {
+        _LblResult3.text = [NSString stringWithFormat:@"%d",(int)_Slider3.value];
+    NSArray * appArray;
+    appArray = [_appHandler getAppearanceList];
+    NSInteger appIndex = [[[appArray objectAtIndex:2] valueForKey:@"index"] integerValue];
+
+    }
 }
 
 - (IBAction)Slider4Updated:(id)sender {
-    _LblResult4.text = [NSString stringWithFormat:@"%d",(int)_Slider4.value];
+    if (_oldSlider4Value != (int)_Slider4.value)
+    {
+        _LblResult4.text = [NSString stringWithFormat:@"%d",(int)_Slider4.value];
+    NSArray * appArray;
+    appArray = [_appHandler getAppearanceList];
+    NSInteger appIndex = [[[appArray objectAtIndex:3] valueForKey:@"index"] integerValue];
+
+    }
+
 }
 
 - (IBAction)Slider5Updated:(id)sender {
-    _LblResult5.text = [NSString stringWithFormat:@"%d",(int)_Slider5.value];
+    if (_oldSlider5Value != (int)_Slider5.value)
+    {
+        _LblResult5.text = [NSString stringWithFormat:@"%d",(int)_Slider5.value];
+    NSArray * appArray;
+    appArray = [_appHandler getAppearanceList];
+    NSInteger appIndex = [[[appArray objectAtIndex:4] valueForKey:@"index"] integerValue];
+
+    }
 }
 
 - (IBAction)Slider6Updated:(id)sender {
-    _LblResult6.text = [NSString stringWithFormat:@"%d",(int)_Slider6.value];
+    if (_oldSlider6Value != (int)_Slider6.value)
+    {
+        _LblResult6.text = [NSString stringWithFormat:@"%d",(int)_Slider6.value];
+    NSArray * appArray;
+    appArray = [_appHandler getAppearanceList];
+    NSInteger appIndex = [[[appArray objectAtIndex:5] valueForKey:@"index"] integerValue];
+
+    }
 }
 
 - (IBAction)Slider7Updated:(id)sender {
-    _LblResult7.text = [NSString stringWithFormat:@"%d",(int)_Slider7.value];
+    if (_oldSlider7Value != (int)_Slider7.value)
+    {
+        _LblResult7.text = [NSString stringWithFormat:@"%d",(int)_Slider7.value];
+    NSArray * appArray;
+    appArray = [_appHandler getAppearanceList];
+    NSInteger appIndex = [[[appArray objectAtIndex:6] valueForKey:@"index"] integerValue];
+
+    }
 }
 
 - (IBAction)Slider8Updated:(id)sender {
-    _LblResult8.text = [NSString stringWithFormat:@"%d",(int)_Slider8.value];
+    if (_oldSlider8Value != (int)_Slider8.value)
+    {
+        _LblResult8.text = [NSString stringWithFormat:@"%d",(int)_Slider8.value];
+    NSArray * appArray;
+    appArray = [_appHandler getAppearanceList];
+    NSInteger appIndex = [[[appArray objectAtIndex:7] valueForKey:@"index"] integerValue];
+
+    }
 }
 
 - (IBAction)Slider9Updated:(id)sender {
-    _LblResult9.text = [NSString stringWithFormat:@"%d",(int)_Slider9.value];
+    if (_oldSlider9Value != (int)_Slider9.value)
+    {
+        _LblResult9.text = [NSString stringWithFormat:@"%d",(int)_Slider9.value];
+    NSArray * appArray;
+    appArray = [_appHandler getAppearanceList];
+    NSInteger appIndex = [[[appArray objectAtIndex:8] valueForKey:@"index"] integerValue];
+
+    }
 }
 
 - (IBAction)SelectedFishChanged:(id)sender {
-    _LblDisplaySelectedFish.text = [NSString stringWithFormat:@"%d",(int)_SelectedFishSlider.value];
-    NSString * imgUrl = [_fishHandler getPath: (int)_SelectedFishSlider.value - 1];
-    
+    int selectedFish = (int)_SelectedFishSlider.value - 1;
+    _LblDisplaySelectedFish.text = [NSString stringWithFormat:@"%d",selectedFish];
+    NSString * imgUrl = [_fishHandler getPath: selectedFish];
+    int tank;
     PicPath.text = imgUrl;
     if (imgUrl != nil && imgUrl.length > 3)
     {
@@ -366,7 +569,86 @@
         image = [[ImageCache sharedImageCache] GetImage:imgUrl];
         _fishImage.image = image;
     }
+    _LblDisplaySelectedCategory.text = [_fishHandler getClass: selectedFish];
+    tank = [_fishHandler getTank: selectedFish];
+    _TankNumber.text =[NSString stringWithFormat:@"%d",(int)tank];
+    _m_fishIndex = [_fishHandler getFishIndex: selectedFish];
+    if (_oldTankIndex != tank)
+    {
+        [self getAppScore: tank];
+    }
+}
+
+-(NSInteger) getAppScore:(NSInteger)Tank
+{
+    NSArray * appArray;
+    NSInteger score = 1;
+    NSInteger appearanceIndex = 0;
     
-    
+    appArray = [_appHandler getAppearanceList];
+    for (int i = 0; i < appArray.count; i++)
+    {
+        appearanceIndex = [[[appArray objectAtIndex:i] valueForKey:@"index"] integerValue];
+        score = [scoreHandler getScore: _m_fishIndex withApp:appearanceIndex];
+        switch (i) {
+            case 0:
+                
+                _LblResult1.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider1.value = score;
+                break;
+            case 1:
+                _LblResult2.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider2.value = score;
+                break;
+            case 2:
+                _LblResult3.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider3.value = score;
+                break;
+            case 3:
+                _LblResult4.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider4.value = score;
+                break;
+            case 4:
+                _LblResult5.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider5.value = score;
+                break;
+            case 5:
+                _LblResult6.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider6.value = score;
+                break;
+            case 6:
+                _LblResult7.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider7.value = score;
+                break;
+            case 7:
+                _LblResult8.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider8.value = score;
+                break;
+            case 8:
+                _LblResult9.text = [NSString stringWithFormat:@"%d",(int)score];
+                _Slider9.value = score;
+                break;
+            default:
+                score = 0;
+                break;
+        }
+    }
+    return 0;
+}
+- (IBAction)Slider1Released:(id)sender {
+/*    if (_oldSlider1Value != (int)_Slider1.value)
+    {
+        NSArray * appArray;
+        appArray = [_appHandler getAppearanceList];
+        NSInteger appIndex = [[[appArray objectAtIndex:0] valueForKey:@"index"] integerValue];
+        
+        if ([scoreHandler updateScore: _m_fishIndex withApp:appIndex :(int)_Slider1.value: _judgeIndex] == 0)
+        {
+            //           [scoreHandler addScore:_m_fishIndex withApp:appIndex :(NSInteger)_Slider1.value: _judgeIndex];
+            [scoreHandler retreiveData];
+        }
+        
+    }
+    */
 }
 @end

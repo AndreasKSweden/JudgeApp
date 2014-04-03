@@ -28,6 +28,8 @@
 		EB7BB77E18E3FCAE0060FEFD /* Fish.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7BB77D18E3FCAE0060FEFD /* Fish.m */; };
 		EB7BB78118E428660060FEFD /* FishHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7BB78018E428660060FEFD /* FishHandler.m */; };
 		EB7BB78618E43AB40060FEFD /* ImageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7BB78518E43AB40060FEFD /* ImageHandler.m */; };
+		EBCF588718EB8444005BA2D3 /* Score.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF588618EB8444005BA2D3 /* Score.m */; };
+		EBCF588A18EB8456005BA2D3 /* ScoreHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF588918EB8456005BA2D3 /* ScoreHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,10 @@
 		EB7BB78018E428660060FEFD /* FishHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FishHandler.m; sourceTree = "<group>"; };
 		EB7BB78418E43AB40060FEFD /* ImageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHandler.h; sourceTree = "<group>"; };
 		EB7BB78518E43AB40060FEFD /* ImageHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageHandler.m; sourceTree = "<group>"; };
+		EBCF588518EB8444005BA2D3 /* Score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score.h; sourceTree = "<group>"; };
+		EBCF588618EB8444005BA2D3 /* Score.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score.m; sourceTree = "<group>"; };
+		EBCF588818EB8456005BA2D3 /* ScoreHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreHandler.h; sourceTree = "<group>"; };
+		EBCF588918EB8456005BA2D3 /* ScoreHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +164,7 @@
 		EB5A1AB418E2A83700721602 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EBCF588418EB8433005BA2D3 /* Score */,
 				EB3D153C18E4C54D002609C0 /* Image */,
 				EB7BB78318E428910060FEFD /* Fish */,
 				EB7BB78218E428850060FEFD /* Appearance */,
@@ -215,6 +222,17 @@
 				EB7BB78018E428660060FEFD /* FishHandler.m */,
 			);
 			name = Fish;
+			sourceTree = "<group>";
+		};
+		EBCF588418EB8433005BA2D3 /* Score */ = {
+			isa = PBXGroup;
+			children = (
+				EBCF588518EB8444005BA2D3 /* Score.h */,
+				EBCF588618EB8444005BA2D3 /* Score.m */,
+				EBCF588818EB8456005BA2D3 /* ScoreHandler.h */,
+				EBCF588918EB8456005BA2D3 /* ScoreHandler.m */,
+			);
+			name = Score;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,11 +338,13 @@
 			files = (
 				EB7BB77818E2FDC90060FEFD /* AppearanceHandler.m in Sources */,
 				EB5A1AC418E2A83700721602 /* ViewController.m in Sources */,
+				EBCF588718EB8444005BA2D3 /* Score.m in Sources */,
 				EB7BB78618E43AB40060FEFD /* ImageHandler.m in Sources */,
 				EB5A1ABE18E2A83700721602 /* AppDelegate.m in Sources */,
 				EB7BB77E18E3FCAE0060FEFD /* Fish.m in Sources */,
 				EB7BB78118E428660060FEFD /* FishHandler.m in Sources */,
 				EB5A1ABA18E2A83700721602 /* main.m in Sources */,
+				EBCF588A18EB8456005BA2D3 /* ScoreHandler.m in Sources */,
 				EB3D153F18E4CD85002609C0 /* ImageCache.m in Sources */,
 				EB7BB77B18E30C5B0060FEFD /* Appearance.m in Sources */,
 			);
@@ -454,10 +474,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JudgeApp/JudgeApp-Prefix.pch";
 				INFOPLIST_FILE = "JudgeApp/JudgeApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -468,10 +490,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JudgeApp/JudgeApp-Prefix.pch";
 				INFOPLIST_FILE = "JudgeApp/JudgeApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

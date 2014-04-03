@@ -53,7 +53,7 @@ static ImageCache* sharedImageCache = nil;
     return self;
 }
 
-- (void) AddImage:(NSString *)imageURL: (UIImage *)image
+- (void) AddImage:(NSString *)imageURL withImage: (UIImage *)image
 {
     [imgCache setObject:image forKey:imageURL];
 }

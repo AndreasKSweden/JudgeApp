@@ -64,4 +64,35 @@
     return nil;
 }
 
+- (NSString *) getClass: (NSInteger) index
+{
+    if (index < fishArray.count)
+    {
+        NSString * class = [[fishArray objectAtIndex:index] valueForKey:@"fishClass"];
+        return class;
+    }
+    return nil;
+}
+
+
+- (NSInteger) getTank: (NSInteger) index
+{
+    if (index < fishArray.count)
+    {
+        NSInteger fishTank = [[[fishArray objectAtIndex:index] valueForKey:@"fishTank"] integerValue];
+        return fishTank;
+    }
+    return 0;
+}
+
+- (NSInteger) getFishIndex: (NSInteger) index
+{
+    if (index < fishArray.count)
+    {
+        NSInteger fishTank = [[[fishArray objectAtIndex:index] valueForKey:@"fishIndex"] integerValue];
+        return fishTank;
+    }
+    return 0;
+}
+
 @end

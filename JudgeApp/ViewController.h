@@ -10,6 +10,7 @@
 #import "AppearanceHandler.h"
 #import "FishHandler.h"
 #import "ImageCache.h"
+#import "ScoreHandler.h"
 
 @interface ViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *SelectedSpices;
@@ -40,8 +41,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *LblAppearance7;
 @property (weak, nonatomic) IBOutlet UILabel *LblAppearance8;
 @property (weak, nonatomic) IBOutlet UILabel *LblAppearance9;
+@property (weak, nonatomic) IBOutlet UILabel *LblServerIP;
+@property (weak, nonatomic) IBOutlet UILabel *LblJudgeId;
 @property (weak, nonatomic) IBOutlet UILabel *LblDisplaySelectedFish;
 @property (weak, nonatomic) IBOutlet UILabel *LblDisplaySelectedCategory;
+@property (weak, nonatomic) IBOutlet UILabel *LblDatase;
 @property (weak, nonatomic) IBOutlet UIButton *SaveButton;
 - (IBAction)OnSave:(id)sender;
 - (IBAction)SaveSettings:(id)sender;
@@ -49,13 +53,20 @@
 @property (weak, nonatomic) IBOutlet UITextField *databaseName;
 @property (weak, nonatomic) IBOutlet UITextField *judgeID;
 @property (weak, nonatomic) IBOutlet UIButton *saveSettings;
+
+@property (weak, nonatomic) IBOutlet UILabel *LblLeftToJudge;
+
 - (IBAction)serverIPChanged:(id)sender;
 
 @property (strong, nonatomic) AppearanceHandler * appHandler;
 @property (strong, nonatomic) FishHandler * fishHandler;
 @property (strong, nonatomic) ImageHandler * imageHandler;
+@property (strong, nonatomic) ScoreHandler * scoreHandler;
 @property (weak, nonatomic) IBOutlet UILabel *PicPath;
 
+@property NSInteger m_fishIndex;
+@property NSInteger judgeIndex;
+@property NSInteger oldTankIndex;
 
 - (IBAction)slider1Updated:(id)sender;
 - (IBAction)Slider2Updated:(id)sender;
@@ -69,7 +80,17 @@
 - (IBAction)SelectedFishChanged:(id)sender;
 @property (weak, nonatomic) IBOutlet UISlider *SelectedFishSlider;
 @property (weak, nonatomic) IBOutlet UIImageView *fishImage;
+@property (weak, nonatomic) IBOutlet UILabel *TankNumber;
 
-
+@property NSInteger oldSlider1Value;
+@property NSInteger oldSlider2Value;
+@property NSInteger oldSlider3Value;
+@property NSInteger oldSlider4Value;
+@property NSInteger oldSlider5Value;
+@property NSInteger oldSlider6Value;
+@property NSInteger oldSlider7Value;
+@property NSInteger oldSlider8Value;
+@property NSInteger oldSlider9Value;
+- (IBAction)Slider1Released:(id)sender;
 
 @end
