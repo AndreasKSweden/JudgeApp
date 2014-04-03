@@ -21,12 +21,16 @@
     appearanceUrl = url;
 }
 
-
+- (NSInteger) getNbrOfAppearance
+{
+    return _nbrOfAppearance;
+    
+}
 - (void) retreiveData
 {
     NSURL * url = [NSURL URLWithString: appearanceUrl];
     NSData * data = [NSData dataWithContentsOfURL:url];
-    
+    _nbrOfAppearance = 0;
     jsonArray = [NSJSONSerialization JSONObjectWithData:data options: kNilOptions error:nil];
 
     //Setup appearance array
@@ -43,7 +47,7 @@
         
         [appearanceArray addObject:[[Appearance alloc]initWithAppearanceName:appName andAppearanceIndex:appIndex andAppearanceMin:appMin andAppearanceMax:appMax andAppearanceWeight:appWeight]];
     }
-    
+    _nbrOfAppearance = jsonArray.count;
     
 }
 - (NSInteger) getNbrOfAppearances

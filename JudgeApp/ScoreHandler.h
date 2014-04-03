@@ -19,7 +19,9 @@
 
 - (void) setUrl: (NSString *) url;
 - (void) retreiveData;
+@property NSInteger nbrJudged;
 
+- (NSInteger) nbrJudged;
 - (NSInteger) getScore: (NSInteger) in_fish withApp:(NSInteger) app;
 - (NSInteger) updateScore: (NSInteger) in_fishIndex withApp: (NSInteger) app :(NSInteger) score :(NSInteger) judge;
 - (NSInteger) scorePresent: (NSInteger) in_fish withApp: (NSInteger) app;

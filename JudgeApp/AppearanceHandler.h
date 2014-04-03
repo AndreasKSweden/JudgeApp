@@ -13,10 +13,12 @@
 @property (nonatomic, strong) NSMutableArray * appearanceArray;
 @property (nonatomic, strong) NSMutableArray * jsonArray;
 @property (nonatomic, strong) NSString* appearanceUrl;
+@property NSInteger nbrOfAppearance;
 
 #pragma mark -
 #pragma mark mark Class Methods
 
+- (NSInteger) getNbrOfAppearance;
 - (void) setUrl: (NSString *) url;
 - (void) retreiveData;
 - (NSInteger) getNbrOfAppearances;

@@ -54,6 +54,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *judgeID;
 @property (weak, nonatomic) IBOutlet UIButton *saveSettings;
 
+@property NSInteger leftToJudge;
 @property (weak, nonatomic) IBOutlet UILabel *LblLeftToJudge;
 
 - (IBAction)serverIPChanged:(id)sender;

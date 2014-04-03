@@ -8,6 +8,7 @@
 
 #import "ScoreHandler.h"
 #import "Score.h"
+#import "AppearanceHandler.h"
 
 @implementation ScoreHandler
 
@@ -20,6 +21,11 @@
 - (void) setAddScoreUrl: (NSString *) url
 {
     _addScoreUrl = url;
+}
+
+- (NSInteger) nbrJudged
+{
+    return _nbrJudged;
 }
 
 - (NSInteger) getScore: (NSInteger) in_fish withApp:(NSInteger) app
@@ -50,7 +56,7 @@
     NSURL * url = [NSURL URLWithString: scoreUrl];
     NSData * data = [NSData dataWithContentsOfURL:url];
     //Definitions
-    
+    _nbrJudged = 0;
     if (scoreArray.count > 0)
     {
         [scoreArray removeAllObjects];
@@ -69,7 +75,7 @@
         [scoreArray addObject:[[Score alloc]initWithIndex:index :fish :appearance :score :publish]];
         
     }
-    
+    _nbrJudged = jsonArray.count;
 }
 
 - (NSInteger) scorePresent: (NSInteger) in_fish withApp: (NSInteger) app

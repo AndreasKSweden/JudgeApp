@@ -30,6 +30,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     CALayer *btnLayer = [_SaveButton layer];
+    NSInteger alreadyJuged = 0;
     [btnLayer setMasksToBounds:YES];
     [btnLayer setCornerRadius:5.0f];
     _appHandler = [[AppearanceHandler alloc] init];
@@ -50,6 +51,8 @@
     _oldSlider7Value=1;
     _oldSlider8Value=1;
     _oldSlider9Value=1;
+    
+    
  /*
     //Debug
     _serverIP.hidden = YES;
@@ -146,7 +149,9 @@
     
             NSLog(@"%@", strResult);
             [scoreHandler retreiveData];
-//             _LblLeftToJudge.Text = [NSString stringWithFormat:@"%d",[_fishHandler getLeftTojudge]];
+        _leftToJudge = [_fishHandler getNbrOfFishes] - [scoreHandler nbrJudged] / [_appHandler getNbrOfAppearance];
+        _LblLeftToJudge.Text = [NSString stringWithFormat:@"%d", _leftToJudge];
+        
         
     }
 }
@@ -212,7 +217,7 @@
     _LblDisplaySelectedCategory.text = [_fishHandler getClass: (int)_SelectedFishSlider.value - 1];         
     
     
-//    _LblLeftToJudge.Text = [NSString stringWithFormat:@"%d",[_fishHandler getLeftTojudge]];
+    _LblLeftToJudge.Text = [NSString stringWithFormat:@"%d", _leftToJudge];
 
 }
 
@@ -436,6 +441,9 @@
 - (IBAction)SaveSettings:(id)sender
 {
     int judgeID = [_judgeID.text integerValue];
+    NSInteger numberOfFishes;
+    NSInteger numberOfScores;
+    NSInteger numberOfAppearance;
     if ([self VerifyJudgeId: judgeID]== TRUE)
     {
         _serverIP.hidden = YES;
@@ -449,6 +457,11 @@
         [self initScoreList];
         [self initFishList];
         [self initAppearanceList];
+        numberOfFishes = [_fishHandler getNbrOfFishes];
+        numberOfScores = [scoreHandler nbrJudged];
+        numberOfAppearance = [_appHandler getNbrOfAppearance];
+        _leftToJudge = numberOfFishes - (numberOfScores / numberOfAppearance);
+        _LblLeftToJudge.Text = [NSString stringWithFormat:@"%d", _leftToJudge];
     }
 }
 
@@ -460,44 +473,45 @@
 - (IBAction)slider1Updated:(id)sender {
     if (_oldSlider1Value != (int)_Slider1.value)
     {
-        _LblResult1.text = [NSString stringWithFormat:@"%d",(int)_Slider1.value];
+        _LblResult1.text = [NSString stringWithFormat:@"%d",(NSInteger)_Slider1.value];
+        NSLog (_LblResult1.text);
         NSArray * appArray;
         appArray = [_appHandler getAppearanceList];
         NSInteger appIndex = [[[appArray objectAtIndex:0] valueForKey:@"index"] integerValue];
-
+        _oldSlider1Value = (int)_Slider1.value;
     }
 }
 
 - (IBAction)Slider2Updated:(id)sender {
     if (_oldSlider2Value != (int)_Slider2.value)
     {
-        _LblResult2.text = [NSString stringWithFormat:@"%d",(int)_Slider2.value];
+        _LblResult2.text = [NSString stringWithFormat:@"%d",(NSInteger)_Slider2.value];
     NSArray * appArray;
     appArray = [_appHandler getAppearanceList];
     NSInteger appIndex = [[[appArray objectAtIndex:1] valueForKey:@"index"] integerValue];
-
+        _oldSlider2Value = (int)_Slider2.value;
     }
 }
 
 - (IBAction)Slider3Updated:(id)sender {
     if (_oldSlider3Value != (int)_Slider3.value)
     {
-        _LblResult3.text = [NSString stringWithFormat:@"%d",(int)_Slider3.value];
+        _LblResult3.text = [NSString stringWithFormat:@"%d",(NSInteger)_Slider3.value];
     NSArray * appArray;
     appArray = [_appHandler getAppearanceList];
     NSInteger appIndex = [[[appArray objectAtIndex:2] valueForKey:@"index"] integerValue];
-
+_oldSlider3Value = (int)_Slider3.value;
     }
 }
 
 - (IBAction)Slider4Updated:(id)sender {
     if (_oldSlider4Value != (int)_Slider4.value)
     {
-        _LblResult4.text = [NSString stringWithFormat:@"%d",(int)_Slider4.value];
+        _LblResult4.text = [NSString stringWithFormat:@"%d",(NSInteger)_Slider4.value];
     NSArray * appArray;
     appArray = [_appHandler getAppearanceList];
     NSInteger appIndex = [[[appArray objectAtIndex:3] valueForKey:@"index"] integerValue];
-
+_oldSlider4Value = (int)_Slider4.value;
     }
 
 }
@@ -505,33 +519,33 @@
 - (IBAction)Slider5Updated:(id)sender {
     if (_oldSlider5Value != (int)_Slider5.value)
     {
-        _LblResult5.text = [NSString stringWithFormat:@"%d",(int)_Slider5.value];
+        _LblResult5.text = [NSString stringWithFormat:@"%d",(NSInteger)_Slider5.value];
     NSArray * appArray;
     appArray = [_appHandler getAppearanceList];
     NSInteger appIndex = [[[appArray objectAtIndex:4] valueForKey:@"index"] integerValue];
-
+_oldSlider5Value = (int)_Slider5.value;
     }
 }
 
 - (IBAction)Slider6Updated:(id)sender {
     if (_oldSlider6Value != (int)_Slider6.value)
     {
-        _LblResult6.text = [NSString stringWithFormat:@"%d",(int)_Slider6.value];
+        _LblResult6.text = [NSString stringWithFormat:@"%d",(NSInteger)_Slider6.value];
     NSArray * appArray;
     appArray = [_appHandler getAppearanceList];
     NSInteger appIndex = [[[appArray objectAtIndex:5] valueForKey:@"index"] integerValue];
-
+_oldSlider6Value = (int)_Slider6.value;
     }
 }
 
 - (IBAction)Slider7Updated:(id)sender {
     if (_oldSlider7Value != (int)_Slider7.value)
     {
-        _LblResult7.text = [NSString stringWithFormat:@"%d",(int)_Slider7.value];
+        _LblResult7.text = [NSString stringWithFormat:@"%d",(NSInteger)_Slider7.value];
     NSArray * appArray;
     appArray = [_appHandler getAppearanceList];
     NSInteger appIndex = [[[appArray objectAtIndex:6] valueForKey:@"index"] integerValue];
-
+_oldSlider7Value = (int)_Slider7.value;
     }
 }
 
@@ -542,7 +556,7 @@
     NSArray * appArray;
     appArray = [_appHandler getAppearanceList];
     NSInteger appIndex = [[[appArray objectAtIndex:7] valueForKey:@"index"] integerValue];
-
+_oldSlider8Value = (int)_Slider8.value;
     }
 }
 
@@ -553,7 +567,7 @@
     NSArray * appArray;
     appArray = [_appHandler getAppearanceList];
     NSInteger appIndex = [[[appArray objectAtIndex:8] valueForKey:@"index"] integerValue];
-
+_oldSlider9Value = (int)_Slider9.value;
     }
 }
 
